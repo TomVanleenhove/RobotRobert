@@ -8,8 +8,7 @@
 
 #include "emotions.h"
 
-void emotions::setup(ofArduino mainArduino){
-    arduino = mainArduino;
+void emotions::setup(){
     currentEmotion = 1;
 }
 void emotions::update(){

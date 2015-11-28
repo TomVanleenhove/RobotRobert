@@ -25,7 +25,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    emotions emotion;
+    emotions arduino;
     ofVideoGrabber grabber;
     int videoWidth;
     int videoHeight;
@@ -43,7 +43,6 @@ public:
     bool recognised;
     
     ofxCvHaarFinder finder;
-    ofArduino arduino;
     void setupArduino(const int & version);
     ofxCvBlob primeBlob;
 };

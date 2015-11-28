@@ -24,7 +24,7 @@ void ofApp::setup(){
 void ofApp::update(){
     grabber.update();
     arduino.update();
-    emotion.update();
+    //emotion.update();
     if(grabber.isFrameNew()) {
         ofImage frame;
         frame.setFromPixels(grabber.getPixels());
@@ -44,7 +44,7 @@ void ofApp::setupArduino(const int &version){
     
     arduino.sendServo(9, 180/2, false);
     arduino.sendServo(10, 180/2, false);
-    emotion.setup(arduino);
+    arduino.currentEmotion = 1;
 }
 void ofApp::draw(){
     grabber.draw(0, 0);
