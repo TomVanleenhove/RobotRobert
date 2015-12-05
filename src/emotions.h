@@ -13,10 +13,10 @@
 #include "ofMain.h"
 #include "ofArduino.h"
 
-class emotions : public ofArduino{
+class emotions{
 public:
     
-    void setup();
+    void setup(vector <ofSerialDeviceInfo>);
     void update();
     
     void neutral(); // emotion 1
@@ -28,9 +28,15 @@ public:
     void shutdown();// emotion 7
     void searchingForHumans();// emotion 8
     
-    //ofArduino arduino;
-    int currentEmotion;
+    void heart();
+    void eyes(int,int);
     
+    ofArduino arduino;
+    int currentEmotion;
+    int heartBeatingSpeed;
+    bool up;
+    int current_h;
+    void setupArduino(const int & version);
 };
 
 

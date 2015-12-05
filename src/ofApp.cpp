@@ -13,50 +13,30 @@ void ofApp::setup(){
     vector<ofVideoDevice> devices = grabber.listDevices();
     
     finder.setup("haarcascade_frontalface_alt_tree.xml");
-    
-    ofAddListener(arduino.EInitialized, this, &ofApp::setupArduino);
-    vector <ofSerialDeviceInfo> deviceList = serial.getDeviceList();
-    for(unsigned int i = 0; i < deviceList.size(); i++) {
-        printf("ID: %d /n",deviceList[i].getDeviceID());
-        printf("Name: %s /n",deviceList[i].getDeviceName().c_str());
-        printf("Path: %s /n",deviceList[i].getDevicePath().c_str());
-        }
-    arduino.connect(deviceList[0].getDevicePath().c_str(), 57600);
+    serial.listDevices();
+    emotion.setup(serial.getDeviceList());
     ofSetWindowShape(640, 480);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     grabber.update();
-    arduino.update();
-    //emotion.update();
+    //arduino.update();
+    emotion.update();
     if(grabber.isFrameNew()) {
         ofImage frame;
         frame.setFromPixels(grabber.getPixels());
         
-        searchForImage(trackImage,frame,recognised);
+        //searchForImage(trackImage,frame,recognised);
         
         finder.findHaarObjects(frame);
     }
-    if (recognised) {
-        arduino.sendDigital(13, ARD_HIGH);
-    }else{
-        arduino.sendDigital(13, ARD_LOW);
-    }
+    //printf("arduino: %d \n",arduino.getPwm(11));
+    
 }
 
 //--------------------------------------------------------------
-void ofApp::setupArduino(const int &version){
-    ofRemoveListener(arduino.EInitialized, this, &ofApp::setupArduino);
-    ofLog() << "setup arduino " << version;
-    arduino.sendServoAttach(9);
-    arduino.sendServoAttach(10);
-    arduino.sendDigitalPinMode(13, ARD_OUTPUT);
-    
-    arduino.sendServo(9, 180/2, false);
-    arduino.sendServo(10, 180/2, false);
-    //arduino.currentEmotion = 1;
-}
+
 void ofApp::draw(){
     grabber.draw(0, 0);
     ofDrawBitmapString(matchfinder.size(),10,10);
@@ -75,8 +55,7 @@ void ofApp::draw(){
     }
     int servoY = (int)((180 - (primeBlob.boundingRect.x / 400)*180) + (primeBlob.boundingRect.width / 2));
     int servoX = (int)(180 - (primeBlob.boundingRect.y / 400)*180)  + (primeBlob.boundingRect.height / 2);
-    arduino.sendServo(9,servoY, false);
-    arduino.sendServo(10,servoX, false);
+    emotion.eyes(servoX, servoY);
     ofDrawBitmapString(servoY, 60, 470);
     ofDrawBitmapString(servoX, 60, 490);
 }
@@ -158,7 +137,12 @@ void ofApp::searchForImage(ofImage trackImage,ofImage frame, bool recogniser){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+    if (key == OF_KEY_UP) {
+        emotion.heartBeatingSpeed += 5;
+    }
+    if (key == OF_KEY_DOWN) {
+        emotion.heartBeatingSpeed -= 5;
+    }
 }
 
 //--------------------------------------------------------------
