@@ -16,6 +16,9 @@
 class emotions : public ofArduino{
 public:
     
+    void setup();
+    void update();
+    
     void neutral(); // emotion 1
     void sad();     // emotion 2
     void happy();   // emotion 3

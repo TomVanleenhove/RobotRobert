@@ -15,8 +15,13 @@ void ofApp::setup(){
     finder.setup("haarcascade_frontalface_alt_tree.xml");
     
     ofAddListener(arduino.EInitialized, this, &ofApp::setupArduino);
-    arduino.connect("/dev/cu.usbmodem1421", 57600);
-    
+    vector <ofSerialDeviceInfo> deviceList = serial.getDeviceList();
+    for(unsigned int i = 0; i < deviceList.size(); i++) {
+        printf("ID: %d /n",deviceList[i].getDeviceID());
+        printf("Name: %s /n",deviceList[i].getDeviceName().c_str());
+        printf("Path: %s /n",deviceList[i].getDevicePath().c_str());
+        }
+    arduino.connect(deviceList[0].getDevicePath().c_str(), 57600);
     ofSetWindowShape(640, 480);
 }
 
@@ -33,6 +38,11 @@ void ofApp::update(){
         
         finder.findHaarObjects(frame);
     }
+    if (recognised) {
+        arduino.sendDigital(13, ARD_HIGH);
+    }else{
+        arduino.sendDigital(13, ARD_LOW);
+    }
 }
 
 //--------------------------------------------------------------
@@ -41,10 +51,11 @@ void ofApp::setupArduino(const int &version){
     ofLog() << "setup arduino " << version;
     arduino.sendServoAttach(9);
     arduino.sendServoAttach(10);
+    arduino.sendDigitalPinMode(13, ARD_OUTPUT);
     
     arduino.sendServo(9, 180/2, false);
     arduino.sendServo(10, 180/2, false);
-    arduino.currentEmotion = 1;
+    //arduino.currentEmotion = 1;
 }
 void ofApp::draw(){
     grabber.draw(0, 0);
@@ -54,10 +65,10 @@ void ofApp::draw(){
     ofDrawBitmapString(goodMatches,40,470);
     primeBlob.boundingRect.width = 0;
     primeBlob.boundingRect.height = 0;
-
     for(unsigned int i = 0; i < finder.blobs.size(); i++) {
         ofRectangle cur = finder.blobs[i].boundingRect;
         ofDrawRectangle(cur.x, cur.y, cur.width, cur.height);
+
         if((primeBlob.boundingRect.width + primeBlob.boundingRect.height) < (finder.blobs[i].boundingRect.height + finder.blobs[i].boundingRect.width)){
             primeBlob = finder.blobs[i];
         }
