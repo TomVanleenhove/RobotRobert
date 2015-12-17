@@ -8,10 +8,9 @@ void ofApp::setup(){
     videoWidth = 640;
     videoHeight = 480;
     grabber.initGrabber(videoWidth, videoHeight);
-    
     trackImage.load("dirk.jpg");
     vector<ofVideoDevice> devices = grabber.listDevices();
-    
+    grabber.setDeviceID(devices[0].id);
     finder.setup("haarcascade_frontalface_alt_tree.xml");
     serial.listDevices();
     emotion.setup(serial.getDeviceList());
@@ -23,6 +22,7 @@ void ofApp::update(){
     grabber.update();
     //arduino.update();
     emotion.update();
+    
     if(grabber.isFrameNew()) {
         ofImage frame;
         frame.setFromPixels(grabber.getPixels());
@@ -43,6 +43,7 @@ void ofApp::draw(){
     ofDrawBitmapString(recognised,30,10);
     ofDrawBitmapString(normalMatches,10,470);
     ofDrawBitmapString(goodMatches,40,470);
+    ofDrawBitmapString(emotion.capSense,150,470);
     primeBlob.boundingRect.width = 0;
     primeBlob.boundingRect.height = 0;
     for(unsigned int i = 0; i < finder.blobs.size(); i++) {
@@ -53,8 +54,8 @@ void ofApp::draw(){
             primeBlob = finder.blobs[i];
         }
     }
-    int servoY = (int)((180 - (primeBlob.boundingRect.x / 400)*180) + (primeBlob.boundingRect.width / 2));
-    int servoX = (int)(180 - (primeBlob.boundingRect.y / 400)*180)  + (primeBlob.boundingRect.height / 2);
+    int servoY = (int)((180 - ((primeBlob.boundingRect.x + (primeBlob.boundingRect.width / 2)) / 640)*180) );
+    int servoX = (int)(((primeBlob.boundingRect.y + (primeBlob.boundingRect.height / 2)) / 480)*180);
     emotion.eyes(servoX, servoY);
     ofDrawBitmapString(servoY, 60, 470);
     ofDrawBitmapString(servoX, 60, 490);
@@ -137,6 +138,7 @@ void ofApp::searchForImage(ofImage trackImage,ofImage frame, bool recogniser){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    emotion.currentEmotion = 3;
     if (key == OF_KEY_UP) {
         emotion.heartBeatingSpeed += 5;
     }
@@ -162,7 +164,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    
+    emotion.currentEmotion = 2;
 }
 
 //--------------------------------------------------------------

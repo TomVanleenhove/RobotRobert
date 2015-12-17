@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5E6DB10A-4501-4F86-A560-453296CBBE61</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CC55D634B805DD2D18978CB01109C21DA79607B8</key>
+		<string>https://github.com/TomVanleenhove/RobotRobert.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>RoboVision.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CC55D634B805DD2D18978CB01109C21DA79607B8</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/TomVanleenhove/RobotRobert.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CC55D634B805DD2D18978CB01109C21DA79607B8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CC55D634B805DD2D18978CB01109C21DA79607B8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RoboVision</string>
+		</dict>
+	</array>
+</dict>
+</plist>

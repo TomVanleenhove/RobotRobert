@@ -25,7 +25,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    //ofArduino arduino;
+    ofArduino arduino;
     emotions emotion;
     ofSerial serial;
     ofVideoGrabber grabber;

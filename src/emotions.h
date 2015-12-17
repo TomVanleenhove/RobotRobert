@@ -11,7 +11,7 @@
 #endif /* defined(__RoboVision__emotions__) */
 
 #include "ofMain.h"
-#include "ofArduino.h"
+//#include "ofArduino.h"
 
 class emotions{
 public:
@@ -27,15 +27,24 @@ public:
     void crashy();  // emotion 6
     void shutdown();// emotion 7
     void searchingForHumans();// emotion 8
+    void analogPinChanged(const int & pinNum);
     
     void heart();
+    void boot();
     void eyes(int,int);
     
     ofArduino arduino;
+    ofSerial emotionSerial;
+    ofSerial eyesSerial;
+    int previousEmotion;
     int currentEmotion;
     int heartBeatingSpeed;
+    bool bootInit;
+    int CurrentFLed;
     bool up;
     int current_h;
+    vector<int> touchfinder;
+    int capSense;
     void setupArduino(const int & version);
 };
 
