@@ -32,12 +32,25 @@ void setup() {
   for (int i=22; i <= 40; i++){
       pinMode(i, OUTPUT);
    }
-   Serial.begin(57600);
+   Serial.begin(9600);
    //eyesSerial.begin(9600);
+   servoTest();
 }
-
+void servoTest(){
+  oogX.write(0);
+  oogY.write(0);
+  for (int i=0; i <= 10; i++){
+     oogX.write((180 / 10)*i);
+     delay(100);
+  }
+  for (int i=0; i <= 10; i++){
+     oogY.write((180 / 10)*i);
+     delay(100);
+  }
+  oogX.write(180 / 2);
+  oogY.write(180 / 2);
+}
 void loop() {
-  heart();
   /*if(bootInit == true){
     boot();
   }*/
@@ -52,28 +65,35 @@ void loop() {
       int inByte = Serial.read();
       //Serial.write(inByte);
       Serial.println(inByte, DEC);
-      Serial.println("doen we!");
+      //Serial.println("doen we!");
         switch (inByte) {
             case 'n':
                 neutral();
+                currentEmotion = 1;
                 break;
             case 'h':
                 happy();
+                currentEmotion = 2;
                 break;
             case 's':
                 sad();
+                currentEmotion = 3;
                 break;
             case 'l':
                 inLove();
+                currentEmotion = 4;
                 break;
             case 'y':
                 sleepy();
+                currentEmotion = 5;
                 break;
             case 'c':
                 crash();
+                currentEmotion = 6;
                 break;
             case 'u':
                 searchingForHumans();
+                currentEmotion = 7;
                 break;
             case 'e':
                 Serial.println("eyes");
@@ -97,7 +117,34 @@ void loop() {
       catchData = false;
     }
   }
+  heart();
+  emotionControl();
   delay(100);
+}
+void emotionControl(){
+  switch (currentEmotion) {
+            case 1:
+                neutral();
+                break;
+            case 2:
+                happy();
+                break;
+            case 3:
+                sad();
+                break;
+            case 4:
+                inLove();
+                break;
+            case 5:
+                sleepy();
+                break;
+            case 6:
+                crash();
+                break;
+            case 7:
+                searchingForHumans();
+                break;
+        }
 }
 void heart() {
   // put your setup code here, to run once:
@@ -118,8 +165,11 @@ void heart() {
     analogWrite(11, current_h);
 }
 void moveEyes(float x, float y) {
+   //Serial.println("oogX: "+ x);
+   //Serial.println("oogY: "+ y);
    oogX.write(x);
    oogY.write(y);
+   
 }
 void boot(){
             for (int i=22; i <= 37; i++){

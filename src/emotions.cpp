@@ -15,7 +15,7 @@ void emotions::setup(vector <ofSerialDeviceInfo> deviceList){
     current_h = 0;
     CurrentFLed = 22;
     bootInit = true;
-    emotionSerial.setup(deviceList[0].getDevicePath().c_str(), 57600);
+    emotionSerial.setup(deviceList[0].getDevicePath().c_str(), 9600);
     //eyesSerial.setup(deviceList[0].getDevicePath().c_str(), 9600);
     //ofAddListener(arduino.EInitialized, this, &emotions::setupArduino);
     /*for(unsigned int i = 0; i < deviceList.size(); i++) {
@@ -114,6 +114,7 @@ void emotions::update(){
 void emotions::neutral(){
     if (previousEmotion != currentEmotion) {
         emotionSerial.writeByte(*"n");
+        printf("otto => neutral  \n");
     }
     //servo wenkbrouwen
     //servo ogen?
@@ -123,6 +124,7 @@ void emotions::neutral(){
 void emotions::sad(){
     if (previousEmotion != currentEmotion) {
         emotionSerial.writeByte(*"s");
+        printf("otto => sad  \n");
     }
     //servo wenkbrouwen
     //servo ogen?
@@ -132,6 +134,7 @@ void emotions::sad(){
 void emotions::happy(){
     if (previousEmotion != currentEmotion) {
         emotionSerial.writeByte(*"h");
+        printf("\n otto => happy");
     }
     //servo wenkbrouwen
     //servo ogen?
@@ -141,6 +144,7 @@ void emotions::happy(){
 void emotions::inLove(){
     if (previousEmotion != currentEmotion) {
         emotionSerial.writeByte(*"l");
+        printf("\n otto => in love");
     }
     //servo wenkbrouwen
     //servo ogen?
@@ -150,6 +154,7 @@ void emotions::inLove(){
 void emotions::sleepy(){
     if (previousEmotion != currentEmotion) {
         emotionSerial.writeByte(*"y");
+        printf("\n otto => sleepy");
     }
     //servo wenkbrouwen
     //servo ogen?
@@ -159,6 +164,7 @@ void emotions::sleepy(){
 void emotions::crashy(){
     if (previousEmotion != currentEmotion) {
         emotionSerial.writeByte(*"c");
+        printf("\n otto => crashy");
     }
     //servo wenkbrouwen
     //servo ogen?
@@ -174,6 +180,7 @@ void emotions::shutdown(){
 void emotions::searchingForHumans(){
     if (previousEmotion != currentEmotion) {
         emotionSerial.writeByte(*"u");
+        printf("\n otto => searching for humans");
     }
     //servo wenkbrouwen
     //servo ogen?
@@ -182,11 +189,12 @@ void emotions::searchingForHumans(){
 }
 void emotions::eyes(int x,int y){
     //arduino.sendServo(9,y, false);
-    emotionSerial.writeByte(*"e");
-    printf("integer: %d \n",x);
+    //printf("xInteger: %d \n",x);
     //printf("send Byte: %d \n",x);
     unsigned char xByte = x;
     unsigned char yByte = y;
+    //printf("xByte: %d \n",xByte);
+    emotionSerial.writeByte(*"e");
     emotionSerial.writeByte(xByte);
     emotionSerial.writeByte(yByte);
     
