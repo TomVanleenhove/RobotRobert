@@ -27,6 +27,8 @@ byte xy[2];
 void setup() {
   // put your setup code here, to run once:
   pinMode(11, OUTPUT);
+  oogX.attach(9);
+  oogY.attach(10);
   for (int i=22; i <= 40; i++){
       pinMode(i, OUTPUT);
    }
@@ -41,15 +43,16 @@ void loop() {
   }*/
   //sad();
   // put your main code here, to run repeatedly:
-  //if(catchData == false){
+  if(catchData == false){
     if(Serial.available() > 0) {
       for (int i=22; i <= 40; i++){
         digitalWrite(i, LOW);
       }
       bootInit = false;
-      byte inByte = Serial.read();
-      Serial.write(inByte);
-      //Serial.println(inByte);
+      int inByte = Serial.read();
+      //Serial.write(inByte);
+      Serial.println(inByte, DEC);
+      Serial.println("doen we!");
         switch (inByte) {
             case 'n':
                 neutral();
@@ -82,16 +85,18 @@ void loop() {
         boot();
       }
     }
-  /*}else{
+  }else{
+    Serial.println("binnen");
     if(Serial.available() > 1) {
       xy[0] = Serial.read();
       xy[1] = Serial.read();
       float ratio = 180.0/255.0;
       moveEyes(xy[0] * ratio , xy[1] * ratio);
-      Serial.println("x: " + xy[0]);
-      Serial.println("y: " + xy[1]);
+      //Serial.println("x: " + xy[0], DEC);
+      Serial.println(xy[1], DEC);
+      catchData = false;
     }
-  }*/
+  }
   delay(100);
 }
 void heart() {

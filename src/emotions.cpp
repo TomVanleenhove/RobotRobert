@@ -71,14 +71,14 @@ void emotions::analogPinChanged(const int & pinNum) {
 void emotions::update(){
     /*heart();
     boot();*/
-    if (emotionSerial.available() == 0) return;
+    /*if (emotionSerial.available() == 0) return;
     else if (emotionSerial.available() > 1){
         while(emotionSerial.available() > 0){
             int byte8 = emotionSerial.readByte();
             string msg = " " + ofToString(byte8);
             printf("byte: %s \n",msg.c_str());
         }
-    }
+    }*/
     switch (currentEmotion) {
         case 1: //neutral:
             neutral();
@@ -185,7 +185,9 @@ void emotions::eyes(int x,int y){
     emotionSerial.writeByte(*"e");
     printf("integer: %d \n",x);
     //printf("send Byte: %d \n",x);
-    emotionSerial.writeByte(x);
-    emotionSerial.writeByte(y);
+    unsigned char xByte = x;
+    unsigned char yByte = y;
+    emotionSerial.writeByte(xByte);
+    emotionSerial.writeByte(yByte);
     
 }
