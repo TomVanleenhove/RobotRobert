@@ -16,7 +16,6 @@ void ofApp::setup(){
     serial.listDevices();
     emotion.setup(serial.getDeviceList());
     ofSetWindowShape(640, 480);
-    
     //voice.load("voices/Happy.mp3");
     //voice.setVolume(0.75);
     //voice.play();
@@ -64,9 +63,8 @@ void ofApp::draw(){
             primeBlob = finder.blobs[i];
         }
     }
-    int servoY = (int)((180 - ((primeBlob.boundingRect.x + (primeBlob.boundingRect.width / 2)) / 640)*180) );
-    int servoX = (int)(((primeBlob.boundingRect.y + (primeBlob.boundingRect.height / 2)) / 480)*180);
-    emotion.eyes(servoX, servoY);
+    servoY = (int)((180 - ((primeBlob.boundingRect.x + (primeBlob.boundingRect.width / 2)) / 640)*180) );
+    servoX = (int)(((primeBlob.boundingRect.y + (primeBlob.boundingRect.height / 2)) / 480)*180);
     ofDrawBitmapString(servoY, 60, 470);
     ofDrawBitmapString(servoX, 60, 490);
 }

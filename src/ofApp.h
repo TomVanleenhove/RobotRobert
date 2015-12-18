@@ -46,6 +46,8 @@ public:
     
     ofxCvHaarFinder finder;
     ofxCvBlob primeBlob;
+    int servoY;
+    int servoX;
     
     //AUDIO
     ofSoundPlayer voice;

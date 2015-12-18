@@ -99,10 +99,7 @@ void emotions::update(){
                 case 'u': //searchingForHumans:
                     currentEmotion = 7;
                     break;
-                default:
-                    neutral();
-                    break;
-        }
+            }
         }
     }
     switch (currentEmotion) {
@@ -211,9 +208,9 @@ void emotions::eyes(int x,int y){
     unsigned char xByte = x;
     unsigned char yByte = y;
     //printf("xByte: %d \n",xByte);
-    /*emotionSerial.writeByte(*"e");
+    emotionSerial.writeByte(*"e");
     emotionSerial.writeByte(xByte);
-    emotionSerial.writeByte(yByte);*/
+    emotionSerial.writeByte(yByte);
     
 }
 

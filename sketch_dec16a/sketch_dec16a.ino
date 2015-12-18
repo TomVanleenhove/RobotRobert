@@ -18,7 +18,7 @@ int sleepEmotion;
 int sleepStart;
 int sleepCount;
 
-int currentEmotion;
+int currentEmotion = 0;
 int heartBeatTempo = 30;
 int current_h = 0;
 bool up;
@@ -37,13 +37,13 @@ Servo browL;
 Servo browR;
 
 bool bootInit = true;
+int bootLed = 22;
 bool catchData = false;
 int dataIndex = 0;
 int dataCatcher[3];
 int Lastfunction;
 int incomingByte = 0;
 
-int currentFLed = 21;
 byte xy[2];
 
 //CAPACITIVE
@@ -339,14 +339,16 @@ void moveEyes(float x, float y) {
 
 }
 void boot() {
-  browControl(3);
-  for (int i = 22; i <= 37; i++) {
-    digitalWrite(i, HIGH);
+  browControl(1);
+    digitalWrite(bootLed, HIGH);
     //delay(100);
-  }
-  for (int i = 22; i <= 40; i++) {
-    digitalWrite(i, LOW);
-  }
+    digitalWrite(bootLed - 1, LOW);
+    if(bootLed == 37){
+      digitalWrite(bootLed, LOW);
+      bootLed = 22;
+    }else{
+      bootLed ++;
+    }
   currentBrain = blueBrain;
 }
 void neutral() {
