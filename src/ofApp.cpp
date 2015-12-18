@@ -5,6 +5,7 @@ using namespace ofxCv;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
     videoWidth = 640;
     videoHeight = 480;
     grabber.initGrabber(videoWidth, videoHeight);
@@ -15,10 +16,17 @@ void ofApp::setup(){
     serial.listDevices();
     emotion.setup(serial.getDeviceList());
     ofSetWindowShape(640, 480);
+    
+    //voice.load("voices/Happy.mp3");
+    //voice.setVolume(0.75);
+    //voice.play();
+    //voice.setVolume(0.75);
+    //voice.play();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    //ofSoundUpdate();
     grabber.update();
     //arduino.update();
     emotion.update();
@@ -32,6 +40,8 @@ void ofApp::update(){
         finder.findHaarObjects(frame);
     }
     //printf("arduino: %d \n",arduino.getPwm(11));
+    
+    //AUDIO
     
 }
 
@@ -138,12 +148,23 @@ void ofApp::searchForImage(ofImage trackImage,ofImage frame, bool recogniser){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    emotion.currentEmotion = 3;
     if (key == OF_KEY_UP) {
-        emotion.heartBeatingSpeed += 5;
+        emotion.currentEmotion = 1;
     }
     if (key == OF_KEY_DOWN) {
-        emotion.heartBeatingSpeed -= 5;
+        emotion.currentEmotion = 2;
+    }
+    if (key == OF_KEY_BACKSPACE) {
+        emotion.currentEmotion = 3;
+    }
+    if (key == OF_KEY_RIGHT) {
+        emotion.currentEmotion = 4;
+    }
+    if (key == OF_KEY_LEFT) {
+        emotion.currentEmotion = 5;
+    }
+    if (key == OF_KEY_ALT) {
+        emotion.currentEmotion = 6;
     }
 }
 

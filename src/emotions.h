@@ -46,6 +46,8 @@ public:
     vector<int> touchfinder;
     int capSense;
     void setupArduino(const int & version);
+    
+    
 };
 
 

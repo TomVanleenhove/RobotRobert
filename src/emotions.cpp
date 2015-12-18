@@ -24,6 +24,7 @@ void emotions::setup(vector <ofSerialDeviceInfo> deviceList){
      printf("Path: %s /n",deviceList[i].getDevicePath().c_str());
      }
     arduino.connect(deviceList[0].getDevicePath().c_str(), 57600);*/
+    
 }
 /*void emotions::setupArduino(const int &version){
     ofRemoveListener(arduino.EInitialized, this, &emotions::setupArduino);
@@ -71,14 +72,39 @@ void emotions::analogPinChanged(const int & pinNum) {
 void emotions::update(){
     /*heart();
     boot();*/
-    /*if (emotionSerial.available() == 0) return;
+    if (emotionSerial.available() == 0) return;
     else if (emotionSerial.available() > 1){
         while(emotionSerial.available() > 0){
             int byte8 = emotionSerial.readByte();
             string msg = " " + ofToString(byte8);
-            printf("byte: %s \n",msg.c_str());
+            switch (currentEmotion) {
+                case 'n': //neutral:
+                    currentEmotion = 1;
+                    break;
+                case 's': //sad:
+                    currentEmotion = 2;
+                    break;
+                case 'h': //happy:
+                    currentEmotion = 3;
+                    break;
+                case 'l': //inLove:
+                    currentEmotion = 4;
+                    break;
+                case 'y': //sleepy:
+                    currentEmotion = 5;
+                    break;
+                case 'c': //crashy:
+                    currentEmotion = 6;
+                    break;
+                case 'u': //searchingForHumans:
+                    currentEmotion = 7;
+                    break;
+                default:
+                    neutral();
+                    break;
         }
-    }*/
+        }
+    }
     switch (currentEmotion) {
         case 1: //neutral:
             neutral();
@@ -98,10 +124,7 @@ void emotions::update(){
         case 6: //crashy:
             crashy();
             break;
-        case 7: //shutdown:
-            shutdown();
-            break;
-        case 8: //searchingForHumans:
+        case 7: //searchingForHumans:
             searchingForHumans();
             break;
         default:
@@ -171,12 +194,6 @@ void emotions::crashy(){
     //ledjes op lichaam
     //ledjes op in hoofd
 }
-void emotions::shutdown(){
-    //servo wenkbrouwen
-    //servo ogen?
-    //ledjes op lichaam
-    //ledjes op in hoofd
-}
 void emotions::searchingForHumans(){
     if (previousEmotion != currentEmotion) {
         emotionSerial.writeByte(*"u");
@@ -194,8 +211,11 @@ void emotions::eyes(int x,int y){
     unsigned char xByte = x;
     unsigned char yByte = y;
     //printf("xByte: %d \n",xByte);
-    emotionSerial.writeByte(*"e");
+    /*emotionSerial.writeByte(*"e");
     emotionSerial.writeByte(xByte);
-    emotionSerial.writeByte(yByte);
+    emotionSerial.writeByte(yByte);*/
     
 }
+
+
+

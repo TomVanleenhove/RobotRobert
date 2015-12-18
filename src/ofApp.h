@@ -46,4 +46,9 @@ public:
     
     ofxCvHaarFinder finder;
     ofxCvBlob primeBlob;
+    
+    //AUDIO
+    ofSoundPlayer voice;
+    void setupAudio();
+    void loadAudio();
 };
